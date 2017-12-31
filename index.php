@@ -36,22 +36,20 @@ foreach ($client->parseEvents() as $event) {
             foreach ($data['feed']['entry'] as $item) {
                 $keywords = explode(',', $item['gsx$keyword']['$t']);
 
-                foreach ($keywords as $keyword) {
-                    if (mb_strpos($message['text'], $keyword) !== false) {
-                        $image = $item['gsx$photourl']['$t'];
-                        $tableTitle = $item['gsx$title']['$t'];
-                    } else {
-                        $client->replyMessage(array(
-                            'replyToken' => $event['replyToken'],
-                            'messages' => array(
-                                    array(
-                                        'type' => 'text',
-                                        'text' => 'Hello 我今天只看得懂人名或外號, 如：黃XX / Demo',
-                                    )
+                if (in_array($message['text'], $keywords)) {
+                    $image = $item['gsx$photourl']['$t'];
+                    $tableTitle = $item['gsx$title']['$t'];
+                } else {
+                    $client->replyMessage(array(
+                        'replyToken' => $event['replyToken'],
+                        'messages' => array(
+                                array(
+                                    'type' => 'text',
+                                    'text' => 'Hello 我今天只看得懂人名或外號, 如：黃XX / Demo',
                                 )
                             )
-                        );
-                    }
+                        )
+                    );
                 }
             }
 
