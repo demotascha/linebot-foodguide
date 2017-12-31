@@ -52,12 +52,26 @@ foreach ($client->parseEvents() as $event) {
             switch ($message['type']) {
                 case 'text':
                     if (!$isMatchKeywords) {
-                        $client->replyMessage(array(
+                        $client->replyMessage(
+                            array(
                             'replyToken' => $event['replyToken'],
                             'messages' => array(
-                                    array(
-                                        'type' => 'text',
-                                        'text' => 'Hello 我今天只看得懂人名或外號, 如：黃XX / Demo',
+                                array(
+                                    'type' => 'text',
+                                    'text' => 'Hello',
+                                ),
+                                array(
+                                    'type' => 'text',
+                                    'text' => '我只看得懂『中文全名』',
+                                ),
+                                array(
+                                    'type' => 'text',
+                                    'text' => '請輸入您的姓名，如：黃威豪',
+                                ),
+                                array(
+                                    'type' => 'sticker',
+                                    'packageId' => '2',
+                                    'stickerId' => '41',
                                     )
                                 )
                             )
@@ -72,7 +86,7 @@ foreach ($client->parseEvents() as $event) {
                                 ),
                                 array(
                                     'type' => 'text',
-                                    'text' => '您的座位是在 ' . $tableTitle . ', 可依照下圖紅色圈圈處移動',
+                                    'text' => '您的座位是在『' . $tableTitle . '』, 可依照下圖紅色圈圈處移動',
                                 ),
                                 array(
                                     'type' => 'image',
