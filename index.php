@@ -40,6 +40,17 @@ foreach ($client->parseEvents() as $event) {
                     if (mb_strpos($message['text'], $keyword) !== false) {
                         $image = $item['gsx$photourl']['$t'];
                         $tableTitle = $item['gsx$title']['$t'];
+                    } else {
+                        $client->replyMessage(array(
+                            'replyToken' => $event['replyToken'],
+                            'messages' => array(
+                                    array(
+                                        'type' => 'text',
+                                        'text' => 'Hello 我今天只看得懂人名或外號, 如：黃XX / Demo',
+                                    )
+                                )
+                            )
+                        );
                     }
                 }
             }
