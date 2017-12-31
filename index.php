@@ -26,8 +26,10 @@ foreach ($client->parseEvents() as $event) {
     switch ($event['type']) {
         case 'message':
             $message = $event['message'];
+            $image = '';
+            $tableTitle = '';
 
-            $json = file_get_contents('https://spreadsheets.google.com/feeds/list/1tQCaj3LUVwH0tBuPrfBY2dOJuF-qzpYEdOqGdNvJRLc/od6/public/values?alt=json');
+            $json = file_get_contents('https://spreadsheets.google.com/feeds/list/15hdMRO6b2IjbYO2b6T_phn8mrAv6ysj8Bnx4auGEnzs/od6/public/values?alt=json');
             $data = json_decode($json, true);
             $result = array();
 
@@ -36,19 +38,8 @@ foreach ($client->parseEvents() as $event) {
 
                 foreach ($keywords as $keyword) {
                     if (mb_strpos($message['text'], $keyword) !== false) {
-                        $candidate = array(
-                            'thumbnailImageUrl' => $item['gsx$photourl']['$t'],
-                            'title' => $item['gsx$title']['$t'],
-                            'text' => $item['gsx$title']['$t'],
-                            'actions' => array(
-                                array(
-                                    'type' => 'uri',
-                                    'label' => '查看詳情',
-                                    'uri' => $item['gsx$url']['$t'],
-                                    ),
-                                ),
-                            );
-                        array_push($result, $candidate);
+                        $image = $item['gsx$photourl']['$t'];
+                        $tableTitle = $item['gsx$title']['$t'];
                     }
                 }
             }
@@ -60,19 +51,16 @@ foreach ($client->parseEvents() as $event) {
                         'messages' => array(
                             array(
                                 'type' => 'text',
-                                'text' => $message['text'].'讓我想想喔…',
-                            ),
-                            array(
-                                'type' => 'template',
-                                'altText' => '為您推薦下列美食：',
-                                'template' => array(
-                                    'type' => 'carousel',
-                                    'columns' => $result,
-                                ),
+                                'text' => 'Hi ' . $message['text'] . ' 感謝您來參加婚禮',
                             ),
                             array(
                                 'type' => 'text',
-                                'text' => '這些都超好吃，真心不騙！',
+                                'text' => '您的座位是在 ' . $tableTitle . ', 可依照下圖紅色圈圈處移動',
+                            ),
+                            array(
+                                'type' => 'image',
+                                'originalContentUrl' => $image,
+                                'previewImageUrl' => $image,
                             ),
                             array(
                                 'type' => 'sticker',
