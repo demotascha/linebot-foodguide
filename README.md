@@ -1,4 +1,4 @@
-linebot-wedding-receive-bot
+linebot-wedding-receive
 ==
 
 婚禮帶位小幫手（LINE Bot範例）
