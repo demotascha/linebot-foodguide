@@ -26,21 +26,21 @@ foreach ($client->parseEvents() as $event) {
     switch ($event['type']) {
         case 'message':
             $message = $event['message'];
+            $isMatchKeywords = false;
             $image = '';
             $tableTitle = '';
 
             $json = file_get_contents('https://spreadsheets.google.com/feeds/list/15hdMRO6b2IjbYO2b6T_phn8mrAv6ysj8Bnx4auGEnzs/od6/public/values?alt=json');
             $data = json_decode($json, true);
-            $isMatchKeywords = true;
+            
 
             foreach ($data['feed']['entry'] as $item) {
                 $keywords = explode(',', $item['gsx$keyword']['$t']);
 
                 if (in_array($message['text'], $keywords)) {
+                    $isMatchKeywords = true;
                     $image = $item['gsx$photourl']['$t'];
                     $tableTitle = $item['gsx$title']['$t'];
-                } else {
-                    $isMatchKeywords= false;
                 }
             }
 
