@@ -22,15 +22,16 @@
  * sheet with json format
  * https://spreadsheets.google.com/feeds/list/16uXte1K6TQWZeiR_X1OquJD98T6SuUNbgqLYfiid1fY/od6/public/values?alt=json
  */
-define('GOOGLE_SHEET_PATH', '<your sheet with json format>');
+const GOOGLE_SHEET_PATH = '<your sheet with json format>';
 
-define('CHANNEL_ACCESS_TOKEN', '<your channel access token>');
-define('CHANNEL_SECRET', '<your channel secret>');
+const CHANNEL_ACCESS_TOKEN = '<your channel access token>';
+const CHANNEL_SECRET = '<your channel secret>';
 
 require_once('line-bot-sdk-tiny/LINEBotTiny.php');
 
 $channelAccessToken = CHANNEL_ACCESS_TOKEN;
 $channelSecret = CHANNEL_SECRET;
+$gSheet = GOOGLE_SHEET_PATH;
 
 $client = new LINEBotTiny($channelAccessToken, $channelSecret);
 foreach ($client->parseEvents() as $event) {
@@ -41,7 +42,7 @@ foreach ($client->parseEvents() as $event) {
             $image = '';
             $tableTitle = '';
 
-            $json = file_get_contents(GOOGLE_SHEET_PATH);
+            $json = file_get_contents($gSheet);
             $data = json_decode($json, true);
 
             foreach ($data['feed']['entry'] as $item) {
