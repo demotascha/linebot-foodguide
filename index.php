@@ -16,10 +16,21 @@
  * under the License.
  */
 
+/**
+ * example sheet
+ * https://docs.google.com/spreadsheets/d/16uXte1K6TQWZeiR_X1OquJD98T6SuUNbgqLYfiid1fY/edit#gid=0
+ * sheet with json format
+ * https://spreadsheets.google.com/feeds/list/16uXte1K6TQWZeiR_X1OquJD98T6SuUNbgqLYfiid1fY/od6/public/values?alt=json
+ */
+define('GOOGLE_SHEET_PATH', '<your sheet with json format>');
+
+define('CHANNEL_ACCESS_TOKEN', '<your channel access token>');
+define('CHANNEL_SECRET', '<your channel secret>');
+
 require_once('line-bot-sdk-tiny/LINEBotTiny.php');
 
-$channelAccessToken = '<your channel access token>';
-$channelSecret = '<your channel secret>';
+$channelAccessToken = CHANNEL_ACCESS_TOKEN;
+$channelSecret = CHANNEL_SECRET;
 
 $client = new LINEBotTiny($channelAccessToken, $channelSecret);
 foreach ($client->parseEvents() as $event) {
@@ -30,9 +41,8 @@ foreach ($client->parseEvents() as $event) {
             $image = '';
             $tableTitle = '';
 
-            $json = file_get_contents('https://spreadsheets.google.com/feeds/list/15hdMRO6b2IjbYO2b6T_phn8mrAv6ysj8Bnx4auGEnzs/od6/public/values?alt=json');
+            $json = file_get_contents(GOOGLE_SHEET_PATH);
             $data = json_decode($json, true);
-            
 
             foreach ($data['feed']['entry'] as $item) {
                 $keywords = explode(',', $item['gsx$keyword']['$t']);
