@@ -3,6 +3,18 @@ linebot-wedding-receive
 
 婚禮帶位小幫手（LINE Bot範例）
 
+方法有二(需寫程式與不需寫程式)：
+
+1. 不需寫程式
+    
+    ```
+    1-1 Line Manager > 帳號設定 > Message API 設定 > Auto-reply messages => 允許
+    1-2 Line Manager > 訊息 > 關鍵字回應訊息 > 逐筆編譯關鍵字
+    ```
+
+
+2. 需寫程式，如下步驟
+
 ## 步驟:
 
 1. 詳細閱讀 [appcoda 開發指南：使用 LINE Bot PHP SDK 打造問答型聊天機器人](https://www.appcoda.com.tw/line-chatbot-sdk/)
